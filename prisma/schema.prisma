@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Topic {
+  id            String   @id @default(uuid())
+  name          String
+  created_at    DateTime @default(now())
+  firstRevision DateTime
+  lastRevision  DateTime
+
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+
+  @@map("topicos")
+}
+
+model Category {
+  id     String  @id @default(uuid())
+  name   String
+  topics Topic[]
+
+  discipline    Discipline @relation(fields: [discipline_id], references: [id])
+  discipline_id String
+
+  @@map("categories")
+}
+
+model Discipline {
+  id         String     @id @default(uuid())
+  name       String
+  categories Category[]
+
+  @@map("disciplines")
+}
