@@ -8,37 +8,23 @@ export class PrismaTopicRepository implements TopicRepository {
   }
 
   async getTodayTopics (): Promise<Topic[]> {
-    const todayStartDate = new Date()
-    const todayFinishDate = new Date()
-
-    todayStartDate.setHours(0)
-    todayStartDate.setMinutes(0)
-    todayStartDate.setMilliseconds(0)
-
-    todayFinishDate.setHours(23)
-    todayFinishDate.setMinutes(59)
-    todayFinishDate.setMilliseconds(999)
+    const today = new Date()
+    today.setHours(0)
+    today.setMinutes(0)
+    today.setSeconds(0)
+    today.setMilliseconds(0)
 
     const todaysTopics = prisma.topic.findMany({
       where: {
         OR: [
           {
-            created_at: {
-              gte: todayStartDate,
-              lte: todayFinishDate
-            }
+            created_at: today
           },
           {
-            firstRevision: {
-              gte: todayStartDate,
-              lte: todayFinishDate
-            }
+            firstRevision: today
           },
           {
-            lastRevision: {
-              gte: todayStartDate,
-              lte: todayFinishDate
-            }
+            lastRevision: today
           }
         ]
       }

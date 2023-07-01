@@ -15,6 +15,14 @@ export class PrismaCategoryRepository implements CategoryRepository {
     })
   }
 
+  async delete (categoryId: string): Promise<Category | null> {
+    return await prisma.category.delete({
+      where: {
+        id: categoryId
+      }
+    })
+  }
+
   async linkDiscipline (disciplineId: string, categoryId: string): Promise<Category | null> {
     const category = await prisma.category.update({
       where: {

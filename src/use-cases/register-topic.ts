@@ -25,11 +25,18 @@ export class RegisterTopicUseCase {
       throw new CategoryNotFoudError()
     }
 
-    const firstRevision = new Date(Date.now() + this.transformDaysToMiliseconds(7))
-    const lastRevision = new Date(Date.now() + this.transformDaysToMiliseconds(30))
+    const today = new Date()
+    today.setHours(0)
+    today.setMinutes(0)
+    today.setSeconds(0)
+    today.setMilliseconds(0)
+
+    const firstRevision = new Date(today.getTime() + this.transformDaysToMiliseconds(7))
+    const lastRevision = new Date(today.getTime() + this.transformDaysToMiliseconds(30))
 
     const topic = await this.topicRepository.create({
       name,
+      created_at: today,
       firstRevision,
       lastRevision,
       category: {
