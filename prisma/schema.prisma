@@ -17,7 +17,7 @@ model Topic {
   firstRevision DateTime
   lastRevision  DateTime
 
-  category    Category @relation(fields: [category_id], references: [id])
+  category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
   category_id String
 
   @@map("topicos")

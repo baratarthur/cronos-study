@@ -12,5 +12,5 @@ export async function deleteCategory (request: FastifyRequest, reply: FastifyRep
   const useCase = makeDeleteCategoryUseCase()
   await useCase.execute({ categoryId })
 
-  return reply.status(201).send()
+  return reply.status(200).send()
 }
